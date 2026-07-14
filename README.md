@@ -41,3 +41,4 @@ The `Makefile` automatically detects which is available and uses it.
 - Read `EXERCICES.md` for hands-on training scenarios
 - Read `SETUP_REPO.md` to understand repository protection rules
 - See `git log --graph --oneline --all` to visualize the branch structure
+# Development branch
