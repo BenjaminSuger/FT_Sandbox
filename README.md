@@ -42,3 +42,4 @@ The `Makefile` automatically detects which is available and uses it.
 - Read `SETUP_REPO.md` to understand repository protection rules
 - See `git log --graph --oneline --all` to visualize the branch structure
 # Development branch
+Added Elo system
