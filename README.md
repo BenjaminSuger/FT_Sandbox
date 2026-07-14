@@ -45,3 +45,4 @@ The `Makefile` automatically detects which is available and uses it.
 Added Elo system
 Setup completed
 Elo implementation details
+WIP: rank function
