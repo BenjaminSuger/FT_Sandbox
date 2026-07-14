@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ libpqxx-dev
+      - name: Build
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build
+      - name: Run unit tests
+        run: cd build && ctest -LE integration --output-on-failure
+
+  format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format
+      - name: Check format
+        run: |
+          clang-format --dry-run --Werror src/*.cpp src/*.hpp tests/*.cpp
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: sandbox
+          POSTGRES_PASSWORD: sandbox
+          POSTGRES_DB: sandbox
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ libpqxx-dev
+      - name: Build
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build
+      - name: Run integration tests
+        run: cd build && ctest -L integration --output-on-failure
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: sandbox
+          DB_PASSWORD: sandbox
+          DB_NAME: sandbox
+
+  docker-build:
+    needs: [unit-tests, format]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t ft_sandbox .

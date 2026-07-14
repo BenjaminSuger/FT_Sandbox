@@ -1,0 +1,12 @@
+# This file defines which teams or users are responsible for code in this repository.
+# This is a template — replace @your-username with your actual GitHub username(s).
+#
+# CODEOWNERS is used to automatically request reviews from the specified users
+# when a pull request touches the listed paths.
+
+# Default owners for everything
+* @your-username
+
+# Specific areas can have their own owners
+src/Database.* @your-username
+tests/ @your-username
