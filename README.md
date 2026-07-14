@@ -43,3 +43,4 @@ The `Makefile` automatically detects which is available and uses it.
 - See `git log --graph --oneline --all` to visualize the branch structure
 # Development branch
 Added Elo system
+Setup completed
