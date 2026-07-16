@@ -1,15 +1,14 @@
 #include "Database.hpp"
-#include <pqxx/pqxx>
 #include <iostream>
+#include <pqxx/pqxx>
 
 class Database::Impl {
-public:
+  public:
     pqxx::connection conn;
-    explicit Impl(const std::string& conninfo) : conn(conninfo) {}
+    explicit Impl(const std::string &conninfo) : conn(conninfo) {}
 };
 
-Database::Database(const std::string& conninfo)
-    : pimpl(std::make_unique<Impl>(conninfo)) {}
+Database::Database(const std::string &conninfo) : pimpl(std::make_unique<Impl>(conninfo)) {}
 
 Database::~Database() = default;
 
@@ -23,13 +22,13 @@ void Database::createSchema() {
     txn.commit();
 }
 
-void Database::addPlayer(const std::string& name) {
+void Database::addPlayer(const std::string &name) {
     pqxx::work txn(pimpl->conn);
     txn.exec_params("INSERT INTO players (name) VALUES ($1)", name);
     txn.commit();
 }
 
-void Database::updateRating(const std::string& name, int rating) {
+void Database::updateRating(const std::string &name, int rating) {
     pqxx::work txn(pimpl->conn);
     txn.exec_params("UPDATE players SET rating = $1 WHERE name = $2", rating, name);
     txn.commit();

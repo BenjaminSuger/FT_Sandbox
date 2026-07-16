@@ -10,7 +10,7 @@ int Score::computeElo(int playerRating, int opponentRating, bool won) {
     return playerRating + delta;
 }
 
-bool Score::isValidUsername(const std::string& name) {
+bool Score::isValidUsername(const std::string &name) {
     if (name.length() < 3 || name.length() > 20)
         return false;
     for (char c : name) {
@@ -20,7 +20,7 @@ bool Score::isValidUsername(const std::string& name) {
     return true;
 }
 
-std::vector<Player> Score::rank(const std::vector<Player>& players) {
+std::vector<Player> Score::rank(const std::vector<Player> &players) {
     // TODO: exercice 3
     throw std::runtime_error("rank() not implemented yet");
 }

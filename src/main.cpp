@@ -1,11 +1,11 @@
-#include "Score.hpp"
 #include "Database.hpp"
-#include <iostream>
+#include "Score.hpp"
 #include <cstdlib>
+#include <iostream>
 #include <sstream>
 
-std::string getEnv(const std::string& key, const std::string& defaultValue = "") {
-    const char* val = std::getenv(key.c_str());
+std::string getEnv(const std::string &key, const std::string &defaultValue = "") {
+    const char *val = std::getenv(key.c_str());
     return val ? std::string(val) : defaultValue;
 }
 
@@ -18,8 +18,8 @@ int main() {
         std::string dbname = getEnv("DB_NAME", "sandbox");
 
         std::ostringstream oss;
-        oss << "host=" << host << " port=" << port << " user=" << user
-            << " password=" << password << " dbname=" << dbname;
+        oss << "host=" << host << " port=" << port << " user=" << user << " password=" << password
+            << " dbname=" << dbname;
         std::string conninfo = oss.str();
 
         Database db(conninfo);
@@ -35,12 +35,12 @@ int main() {
 
         auto players = db.fetchAll();
         std::cout << "\n=== Scoreboard ===\n";
-        for (const auto& p : players) {
+        for (const auto &p : players) {
             std::cout << p.name << ": " << p.rating << "\n";
         }
 
         return 0;
-    } catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << "\n";
         return 1;
     }
