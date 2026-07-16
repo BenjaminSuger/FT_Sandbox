@@ -22,5 +22,6 @@ bool Score::isValidUsername(const std::string &name) {
 
 std::vector<Player> Score::rank(const std::vector<Player> &players) {
     // TODO: exercice 3
+    (void) players;
     throw std::runtime_error("rank() not implemented yet");
 }
