@@ -1,5 +1,5 @@
-#include <catch2/catch_test_macros.hpp>
 #include "Score.hpp"
+#include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("Score::computeElo - victory against stronger opponent", "[elo]") {
     int playerRating = 1000;
