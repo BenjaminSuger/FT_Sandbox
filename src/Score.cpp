@@ -1,6 +1,6 @@
 #include "Score.hpp"
+#include <algorithm>
 #include <cmath>
-#include <stdexcept>
 
 int Score::computeElo(int playerRating, int opponentRating, bool won) {
     const int K = 32;
@@ -21,7 +21,11 @@ bool Score::isValidUsername(const std::string &name) {
 }
 
 std::vector<Player> Score::rank(const std::vector<Player> &players) {
-    // TODO: exercice 3
-    (void)players;
-    throw std::runtime_error("rank() not implemented yet");
+    std::vector<Player> ranked = players;
+    std::sort(ranked.begin(), ranked.end(), [](const Player &a, const Player &b) {
+        if (a.rating != b.rating)
+            return a.rating > b.rating;
+        return a.name < b.name;
+    });
+    return ranked;
 }
