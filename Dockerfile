@@ -1,4 +1,4 @@
-FROM debian:bookworm as builder
+FROM debian:bookworm AS builder
 
 RUN apt-get update && apt-get install -y \
     cmake \
@@ -17,7 +17,7 @@ RUN cmake -B build -DCMAKE_BUILD_TYPE=Release && \
 FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y \
-    libpqxx6 \
+    libpqxx-6.4 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m -u 1000 app && \
